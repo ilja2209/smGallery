@@ -3,6 +3,7 @@ package com.example.smgallery
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlarmManager
+import android.app.AlertDialog
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -19,6 +20,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.system.exitProcess
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 import kotlin.OptIn as OptIn1
@@ -149,5 +151,13 @@ class MainActivity : Activity() {
             alarmManager.set(AlarmManager.RTC, System.currentTimeMillis() + 1000, pendingIntent)
             defaultHandler.uncaughtException(thread, throwable)
         }
+    }
+
+    private fun showDialog(caption: String, text: String?) {
+        val alertDialog: AlertDialog = AlertDialog.Builder(this@MainActivity).create()
+        alertDialog.setTitle(caption)
+        alertDialog.setMessage(text)
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK") { _, _ -> exitProcess(-1) }
+        alertDialog.show()
     }
 }
